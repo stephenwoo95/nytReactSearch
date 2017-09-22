@@ -1,6 +1,10 @@
 import axios from "axios";
 
 const API = {
+  // Does a NYT API Search
+  retrieveArticles: function(query) {
+    return axios.get(query);
+  },
   // Retrieves all articles from the db
   getArticles: function() {
     return axios.get("/api/articles");
@@ -14,10 +18,9 @@ const API = {
     return axios.delete(`/api/articles/${id}`);
   },
   // Adds a comment to an article
-  commentArticle: function(article) {
-    article.favorited = !article.favorited;
-    const { _id, favorited } = article;
-    return axios.patch(`/api/articles/${_id}`, { $push: { comments:  }});
+  commentArticle: function(article,comment) {
+    const { _id } = article;
+    return axios.patch(`/api/articles/${_id}`, { $push: { comments: comment } });
   }
 };
 

@@ -10,7 +10,7 @@ module.exports = {
     else {
       query = req.params.id ? { _id: req.params.id } : {};
     }
-    Article.find(query)
+    Article.find(query).populate("comments")
       .then(function(doc) {
         res.json(doc);
       }).catch(function(err) {
