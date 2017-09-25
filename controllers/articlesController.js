@@ -1,4 +1,5 @@
 var Article = require("../models/article");
+var Comment = require("../models/comment");
 
 module.exports = {
   // This method handles retrieving articles from the db
@@ -27,19 +28,39 @@ module.exports = {
   },
   // This method handles updating articles
   update: function(req, res) {
-    Article.update({
-      _id: req.params.id
-    },
-      req.body
-    ).then(function(doc) {
-      res.json(doc);
-    }).catch(function(err) {
-      res.json(err);
+    console.log('update controller');
+    console.log(req.params.id);
+    Comment.collection.insert(req.body, function(err,doc) {
+      if(err) {
+        console.log(err);
+      } else {
+        console.log(doc);
+        Article.update({
+          _id: req.params.id
+        },
+          { $push: { "comments": doc.insertedIds[0] } }, { new: true }
+        ).then(function(doc1) {
+          console.log(doc1);
+          res.json(doc1);
+        }).catch(function(err) {
+          res.json(err);
+        });
+      }
     });
   },
   // This method handles deleting articles
   destroy: function(req, res) {
     Article.remove({
+      _id: req.params.id
+    }).then(function(doc) {
+      res.json(doc);
+    }).catch(function(err) {
+      res.json(err);
+    });
+  },
+
+  deleteComment: function(req, res) {
+    Comment.remove({
       _id: req.params.id
     }).then(function(doc) {
       res.json(doc);

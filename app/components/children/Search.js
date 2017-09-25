@@ -8,6 +8,7 @@ class Search extends Component {
       start: "",
       end: ""
     }
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -25,16 +26,13 @@ class Search extends Component {
 
     // Clearing the input field after submitting
     this.setState({ term: "",start:"",end:"" });
-  },
+  }
 
   render() {
     return(
-      <div className="panel">
-        <div className="panel-heading">
-          <h3 className="panel-title text-center">Search For Articles</h3>
-        </div>
-        <div className="panel-body text-center">
-
+      <div className="card">
+        <div className="card-content">
+          <span className="card-title">Search For Articles</span>
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
               <h4>
@@ -44,7 +42,7 @@ class Search extends Component {
               <input
                 type="text"
                 value={this.state.term}
-                className="form-control text-center"
+                className="form-control"
                 id="term"
                 onChange={this.handleChange}
                 required
@@ -60,10 +58,9 @@ class Search extends Component {
                 min="1851"
                 max="2017"
                 value={this.state.start}
-                className="form-control text-center"
+                className="form-control"
                 id="start"
                 onChange={this.handleChange}
-                required
               />
             </div>
             <div className="form-group">
@@ -76,16 +73,15 @@ class Search extends Component {
                 min="1851"
                 max="2017"
                 value={this.state.end}
-                className="form-control text-center"
+                className="form-control"
                 id="end"
                 onChange={this.handleChange}
-                required
               />
             </div>
 
             <br />
-            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-              <i class="material-icons right">send</i>
+            <button className="btn waves-effect waves-light" type="submit" name="action">Submit
+              <i className="material-icons right">send</i>
             </button>
           </form>
         </div>

@@ -1,0 +1,16 @@
+.saveBtn, .btn-floating, .clearResults {
+  float: right;
+}
+
+h1 {
+  margin: 0;
+}
+
+.deleteComment {
+  position: absolute;
+  right: 10px;
+}
+
+.delete {
+  margin-left: 10px !important;
+}

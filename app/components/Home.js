@@ -14,31 +14,34 @@ class Home extends Component {
 
     this.getArticles = this.getArticles.bind(this);
     this.retrieveArticles = this.retrieveArticles.bind(this);
+    this.clearResults = this.clearResults.bind(this);
   }
+
   // Getting all articles when the component mounts
-  componentDidMount() {
+  componentWillMount() {
     this.getArticles();
   }
 
   retrieveArticles(query) {
-    API.retrieveArticles(query).then(function(data) {
-      console.log(data.response.docs);
-      this.setState({ results: data.response.docs.splice(0,5) });
+    API.retrieveArticles(query).then((data) => {
+      this.setState({ results: data.data.response.docs.splice(0,5) });
     })
   }
 
   getArticles() {
     API.getArticles().then((res) => {
+      console.log(res);
       this.setState({ articles: res.data });
     });
   }
 
-  // A helper method for rendering one panel fro each result from Article Search
+  // A helper method for rendering one panel for each result from Article Search
   renderResults() {
     return this.state.results.map(article => (
       // make divs for holding saved articles
       <Results
         article={article}
+        key={article._id}
         getArticles={this.getArticles}
       />
     ));
@@ -46,6 +49,8 @@ class Home extends Component {
 
   // A helper method for rendering one panel for each article
   renderArticles() {
+    // for(var i=0;i<this.state.articles.length;i++) {}
+    console.log(this.state.articles);
     return this.state.articles.map(article => (
       // make divs for holding saved articles
       <Archive
@@ -55,33 +60,40 @@ class Home extends Component {
       />
     ));
   }
+
+  clearResults() {
+    this.setState({ results: [] });
+  }
+
   render() {
     return (
       <div className="container">
         <div className="row">
-          <Search
-            retrieveArticles={this.retrieveArticles}
-          />
-        </div>
-        <div className="row">
-          <hr />
-          <div className="panel">
-            <div className="panel-heading">
-              Search Results
-            </div>
-            <div className="panel-content">
-              {this.renderResults()}
+          <div className="col m6">
+            <Search
+              retrieveArticles={this.retrieveArticles}
+            />
+          </div>
+          <div className="col m6">
+            <div className="card">
+              <div className="card-content">
+                <span className="card-title">Search Results <button className='clearResults btn red waves-light waves-effect' onClick={ this.clearResults }>Clear</button></span>
+                <ul className="collection">
+                    { this.renderResults() }
+                </ul>
+              </div>
             </div>
           </div>
         </div>
         <div className="row">
-          <hr />
-          <div className="panel">
-            <div className="panel-head">
-              Saved Articles
-            </div>
-            <div className="panel-content">
-              {this.renderArticles()}
+          <div className="col m12">
+            <div className="card">
+              <div className="card-content">
+                <span className="card-title">Archive</span>
+                <ul className="collection">
+                    { this.renderArticles() }
+                </ul>
+              </div>
             </div>
           </div>
         </div>

@@ -13,4 +13,6 @@ router.patch("/articles/:id", articlesController.update);
 // Delete a specific article using the id in req.params.id
 router.delete("/articles/:id", articlesController.destroy);
 
+router.delete("/articles/comment/delete/:id", articlesController.deleteComment);
+
 module.exports = router;
