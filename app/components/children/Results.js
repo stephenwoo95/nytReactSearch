@@ -1,5 +1,7 @@
 import React,{ Component } from "react";
 import API from "../../utils/API";
+import socketIOClient from "socket.io-client";
+const socket = socketIOClient("http://localhost:3000");
 
 class Results extends Component {
   constructor() {
@@ -27,6 +29,7 @@ class Results extends Component {
     console.log(newEntry);
     API.saveArticle(newEntry).then((data) => {
       console.log(data);
+      socket.emit('save', newEntry);
       this.setState({ saved: true });
       this.props.getArticles();
     });

@@ -3,6 +3,8 @@ import Search from "./children/Search";
 import Results from "./children/Results";
 import Archive from "./children/Archive";
 import API from "../utils/API";
+import socketIOClient from "socket.io-client";
+const socket = socketIOClient("http://localhost:3000");
 
 class Home extends Component {
   constructor() {
@@ -20,6 +22,13 @@ class Home extends Component {
   // Getting all articles when the component mounts
   componentWillMount() {
     this.getArticles();
+  }
+
+  componentDidMount() {
+    socket.on("saved", data => {
+      this.getArticles();
+      alert('New article saved: ' + data.title);
+    });
   }
 
   retrieveArticles(query) {

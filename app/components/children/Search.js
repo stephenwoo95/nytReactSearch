@@ -20,8 +20,18 @@ class Search extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    var query = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=d5fb0ee0ea2a4439a2a4f5ad63f1f268&q=" + this.state.term + "&start_year=" + this.state.start + "&end_year=" + this.state.end;
+    var query = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=d5fb0ee0ea2a4439a2a4f5ad63f1f268&q=" + this.state.term;
+    if(this.state.start !== '') {
+      query += "&begin_date=" + this.state.start + "0101";
+    }
+    if(this.state.end !== '') {
+      query += "&end_date=" + this.state.end;
+      if(this.state.start == this.state.end) {
+        query += "1231";
+      } else {
+        query += "0101";
+      }
+    }
     this.props.retrieveArticles(query);
 
     // Clearing the input field after submitting

@@ -2,6 +2,22 @@ import React,{ Component } from "react";
 import Modal from "react-modal";
 import API from "../../utils/API";
 
+const customStyles = {
+  content: {
+    position: 'absolute',
+    top: '40px',
+    bottom: 'auto',
+    left: '40px',
+    right: '40px',
+    border: '1px solid rgb(204, 204, 204)',
+    background: 'rgb(255, 255, 255)',
+    overflow: 'auto',
+    borderRadius: '4px',
+    outline: 'none',
+    padding: '20px',
+  }
+}
+
 class Archive extends Component {
   constructor() {
     super();
@@ -77,6 +93,7 @@ class Archive extends Component {
         <Modal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
+          style={customStyles}
           contentLabel="commentsModal"
           >
           <div className="modal-header">

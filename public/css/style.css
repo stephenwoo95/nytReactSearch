@@ -1,3 +1,7 @@
+.waves-effect {
+  position: unset !important;
+}
+
 .saveBtn, .btn-floating, .clearResults {
   float: right;
 }
@@ -7,10 +11,14 @@ h1 {
 }
 
 .deleteComment {
-  position: absolute;
+  position: absolute !important;
   right: 10px;
 }
 
 .delete {
   margin-left: 10px !important;
+}
+
+#commentsCollection {
+  max-height: 400px;
 }
